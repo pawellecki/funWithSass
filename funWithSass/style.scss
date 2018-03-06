@@ -1,0 +1,318 @@
+// background hexagons sizes duuuuuu
+$hex1: 19px; $hex2: 28px; $hex3: 43px; $hex4: 64px; $hex5: 97px; $hex6: 147px; $hex7: 250px; $hex8: 425px;    
+
+// running hexagons sizes					                 
+$hex-run1: 15px; $hex-run2: 19px; $hex-run3: 25px; $hex-run4: 34px; $hex-run5: 45px; $hex-run6: 60px; $hex-run7: 80px; $hex-run8: 107px; $hex-run9: 142px;
+
+//bottom & top hexagons position from the middle
+$top1: 0; $top2: 0; $top3: 38px; $top4: 63px; $top5: 109px; $top6: 182px; $top7: 355px; $top8: 670px; $top9: 1140px;   
+
+//top-right hexagon's 'left' value
+$trl1: 7px;  $trl2: 18px; $trl3: 36px;  $trl4: 60px;  $trl5: 105px;  $trl6: 174px;  $trl7: 340px;  $trl8: 635px; $trl9: 1090px;
+
+//top-right hexagon's 'top' value
+$trt1: 3px;  $trt2: 9px;  $trt3: 19px;  $trt4: 32px;  $trt5: 56px;   $trt6: 96px;   $trt7: 186px;  $trt8: 348px; $trt9: 595px; 
+
+
+$nav: 90px;  $space: 50px;
+$color: #25a792;
+$transition: 0.5s;
+
+
+@mixin shape-before-after ($size) {
+	width: calc(4 * #{$size});
+	height: calc(2.2 * #{$size});
+	background: $color;
+	position: absolute;
+	opacity: 0.1;
+	font-size: 25px;
+	text-align: center;
+    left: 50%;
+	top: 50%;
+    transform: translate(-50%, -50%);
+	&:before {
+		content: "";
+		position: absolute;
+		left: 0;
+		width: 0;
+		height: 0;
+		top: -$size;
+		border-left: calc(2 * #{$size}) solid transparent;
+		border-right: calc(2 * #{$size}) solid transparent;
+		border-bottom: $size solid $color;
+	}
+	&:after {
+		content: "";
+		position: absolute;
+		left: 0;
+		width: 0;
+		height: 0;
+		bottom: -$size;
+		border-left: calc(2 * #{$size}) solid transparent;
+		border-right: calc(2 * #{$size}) solid transparent;
+		border-top: $size solid $color;
+	}
+}
+@mixin hover-before-after ($size) {
+	width: calc(4 * #{$size});
+	height: calc(2.2 * #{$size});
+	left: 50%;
+	top: 50%;
+	//opacity: 0.5;
+	//filter: blur(5px);
+	transition: 1s;
+	&:before {
+		transition: 1s;
+		top: -$size;
+		border-left: calc(2 * #{$size}) solid transparent;
+		border-right: calc(2 * #{$size}) solid transparent;
+		border-bottom: $size solid $color;
+	}
+	&:after {
+		transition: 1s;
+		bottom: -$size;
+		border-left: calc(2 * #{$size}) solid transparent;
+		border-right: calc(2 * #{$size}) solid transparent;
+		border-top: $size solid $color;
+	}		
+}
+@mixin z-opacity-transition {
+	z-index: 5;
+	opacity: 1;
+//	transition: $transition;
+//	&:before, &:after {transition: $transition;}
+}
+
+html {height: 100%; width: 100%;}
+body {height: 100%;}
+
+main {
+    display: block;
+	height: 100vh;
+    background: lightblue;
+    font-size: 10px;
+	position: relative;
+	overflow: hidden;
+	.btn	{
+		width: $nav;
+		background: grey;
+		position: absolute;
+		right: 20px;
+		z-index: 10;
+	}
+	//nav
+	.r1 {top:  calc(2 * #{$space});}
+	.r2 {top:  calc(3 * #{$space});}
+	.r3 {top:  calc(4 * #{$space});}
+	.r4 {top:  calc(5 * #{$space});}
+	.r5 {top:  calc(6 * #{$space});}
+	.r6 {top:  calc(7 * #{$space});}
+	
+	.background-hexagon1 {@include shape-before-after ($hex1)}
+	.background-hexagon2 {@include shape-before-after ($hex2)}
+	.background-hexagon3 {@include shape-before-after ($hex3)}
+	.background-hexagon4 {@include shape-before-after ($hex4)}
+	.background-hexagon5 {@include shape-before-after ($hex5)}
+	.background-hexagon6 {@include shape-before-after ($hex6)}
+	.background-hexagon7 {@include shape-before-after ($hex7)}
+	.background-hexagon8 {@include shape-before-after ($hex8)}
+}
+.inside {
+	width: 82px;
+	height: 42px;
+	margin: 4px;
+	background: lightblue;
+	font-size: 15px;
+}
+
+.hex-top-left {
+	@include shape-before-after ($hex-run7);
+	@include z-opacity-transition;
+	left: calc(50% - #{$trl7});
+	top: calc(50% - #{$trt7});
+}
+
+.hex-bottom-left {
+	@include shape-before-after ($hex-run8);
+	@include z-opacity-transition;
+	left: calc(50% - #{$trl8});
+	top: calc(50% + #{$trt8});
+}
+.hex-bottom {
+	@include shape-before-after ($hex-run9);
+	@include z-opacity-transition;
+	top: calc(50% + #{$top9});
+}
+
+.hex-bottom-right {
+	@include shape-before-after ($hex-run9);
+	@include z-opacity-transition;
+	left: calc(50% + #{$trl9});
+	top: calc(50% + #{$trt9});
+}
+.hex-top-right {
+	@include shape-before-after ($hex-run9);
+	@include z-opacity-transition;
+	left: calc(50% + #{$trl9});
+	top: calc(50% - #{$trt9});
+}
+.hex-top {
+	@include shape-before-after ($hex-run9);
+	@include z-opacity-transition;
+	top: calc(50% - #{$top9});
+}
+
+.r1:hover ~ {
+	& .hex-top-left {
+		@include hover-before-after ($hex-run6);	
+		left: calc(50% -  #{$trl6});
+		top: calc(50% -  #{$trt6});
+		//transform: rotate(61.8deg);
+	}
+	& .hex-bottom-left {
+		@include hover-before-after ($hex-run7);
+		left: calc(50% - #{$trl7});
+		top: calc(50% + #{$trt7});
+	}
+	& .hex-bottom {
+		@include hover-before-after ($hex-run8);	
+		top: calc(50% + #{$top8});
+	}
+}
+.r2:hover ~ {
+	& .hex-top-left {
+		@include hover-before-after ($hex-run5);		
+		left: calc(50% -  #{$trl5});
+		top: calc(50% -  #{$trt5});
+	}
+	& .hex-bottom-left {
+		@include hover-before-after ($hex-run6);	
+		left: calc(50% - #{$trl6});
+		top: calc(50% + #{$trt6});
+	}
+	& .hex-bottom {
+		@include hover-before-after ($hex-run7);	
+		top: calc(50% + #{$top7});
+	}
+	.hex-bottom-right {
+		@include hover-before-after ($hex-run8);	
+		left: calc(50% + #{$trl8});
+		top: calc(50% + #{$trt8});
+	}
+}
+.r3:hover ~ {
+	& .hex-top-left {
+		@include hover-before-after ($hex-run4);		
+		left: calc(50% -  #{$trl4});
+		top: calc(50% -  #{$trt4});
+	}
+	& .hex-bottom-left {
+		@include hover-before-after ($hex-run5);
+		left: calc(50% -  #{$trl5});
+		top: calc(50% +  #{$trt5});
+	}
+	& .hex-bottom {
+		@include hover-before-after ($hex-run6);	
+		top: calc(50% + #{$top6});
+	}
+	.hex-bottom-right {
+		@include hover-before-after ($hex-run7);	
+		left: calc(50% + #{$trl7});
+		top: calc(50% + #{$trt7});
+	}
+	& .hex-top-right {
+		@include hover-before-after ($hex-run8);		
+		left: calc(50% +  #{$trl8});
+		top: calc(50% -  #{$trt8});
+	}
+}
+.r4:hover ~ {
+	& .hex-top-left {
+		@include hover-before-after ($hex-run3);		
+		left: calc(50% -  #{$trl3});
+		top: calc(50% -  #{$trt3});
+	}
+	& .hex-bottom-left {
+		@include hover-before-after ($hex-run4);	
+		left: calc(50% -  #{$trl4});
+		top: calc(50% +  #{$trt4});
+	}
+	& .hex-bottom {
+		@include hover-before-after ($hex-run5);	
+		top: calc(50% + #{$top5});
+	}
+	.hex-bottom-right {
+		@include hover-before-after ($hex-run6);	
+		left: calc(50% + #{$trl6});
+		top: calc(50% + #{$trt6});
+	}
+	& .hex-top-right {
+		@include hover-before-after ($hex-run7);		
+		left: calc(50% +  #{$trl7});
+		top: calc(50% -  #{$trt7});
+	}
+	& .hex-top {
+		@include hover-before-after ($hex-run8);	
+		top: calc(50% - #{$top8});
+	}
+}
+.r5:hover ~ {
+	& .hex-top-left {
+		@include hover-before-after ($hex-run2);		
+		left: calc(50% -  #{$trl2});
+		top: calc(50% -  #{$trt2});
+	}
+	& .hex-bottom-left {
+		@include hover-before-after ($hex-run3);	
+		left: calc(50% -  #{$trl3});
+		top: calc(50% +  #{$trt3});
+	}
+	& .hex-bottom {
+		@include hover-before-after ($hex-run4);	
+		top: calc(50% + #{$top4});
+	}
+	.hex-bottom-right {
+		@include hover-before-after ($hex-run5);	
+		left: calc(50% + #{$trl5});
+		top: calc(50% + #{$trt5});
+	}
+	& .hex-top-right {
+		@include hover-before-after ($hex-run6);		
+		left: calc(50% +  #{$trl6});
+		top: calc(50% -  #{$trt6});
+	}
+	& .hex-top {
+		@include hover-before-after ($hex-run7);	
+		top: calc(50% - #{$top7});
+	}
+}
+.r6:hover ~ {
+	& .hex-top-left {
+		@include hover-before-after ($hex-run1);		
+		left: calc(50% - #{$trl1});
+		top: calc(50% - #{$trt1});
+	}
+	& .hex-bottom-left {
+		@include hover-before-after ($hex-run2);
+		left: calc(50% -  #{$trl2});
+		top: calc(50% +  #{$trt2});
+	}
+	& .hex-bottom {
+		@include hover-before-after ($hex-run3);	
+		top: calc(50% + #{$top3});
+	}
+	.hex-bottom-right {
+		@include hover-before-after ($hex-run4);	
+		left: calc(50% + #{$trl4});
+		top: calc(50% + #{$trt4});
+	}
+	& .hex-top-right {
+		@include hover-before-after ($hex-run5);		
+		left: calc(50% +  #{$trl5});
+		top: calc(50% -  #{$trt5});
+	}
+	& .hex-top {
+		@include hover-before-after ($hex-run6);	
+		top: calc(50% - #{$top6});
+	}
+}
